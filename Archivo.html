@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cuba y las Olímpiadas</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+        }
+        h1 { 
+            color: #333; 
+        }
+        p { 
+            line-height: 1.6; 
+        }
+    
+       .container { 
+            width: 100%; 
+            max-width: 900px; 
+            margin: auto; 
+        }
+       .description { 
+            text-align: center; 
+            margin-bottom: 20px; 
+        }
+        canvas { 
+            display: block; 
+            margin-left: auto; 
+            margin-right: auto; 
+            width: 900px; height: 800px;
+        }
+    </style>
+    
+    <!-- Enlaza la biblioteca Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Asegúrate de que main.js esté al final para que se cargue después de Chart.js -->
+
+</head>
+<body>
+    <h1>Bajo el Sol Caribeño: La Historia Olímpica de Cuba</h1>
+
+    <p>Cuba, un país con una rica historia cultural y deportiva, ha sido un participante activo en los Juegos Olímpicos desde su debut en 1900, marcado por el heroico rendimiento del esgrimista Ramón Fonst, quien trajo las primeras medallas al país. Aunque la participación continuó sin interrupciones, no fue hasta 1964 cuando los esfuerzos de los atletas cubanos comenzaron a materializarse en logros significativos. Desde aquel momento, Cuba ha establecido una impresionante presencia en el escenario olímpico, acumulando múltiples premios y capturando la admiración de millones de seguidores en todo el mundo.</p>
+    <div class="description">
+        Distribución de las medallas obtenidas por Cuba en los Juegos Olímpicos
+    </div>
+        <canvas id="chart"></canvas>
+    </div>
+
+    <p>Con una trayectoria sólida en los Juegos Olímpicos, Cuba ha demostrado consistentemente su habilidad para desarrollar talento atlético de superior calidad. Los atletas cubanos compiten con integridad y dedicación, aspirando a nuevas hazañas mientras fortalecen el patrimonio olímpico de su nación.</p>
+    <h2>Los Últimos Años: Un Legado Continuo</h2>
+    <p>En los últimos años, la cantidad total de medallas ganadas por Cuba ha disminuido desde 2008. A pesar de tener atletas destacados en ciertos deportes, como Mijain López, parece que algunos atletas están en una etapa de transición o enfrentando los desafíos inherentes a la edad avanzada.</p>
+    <p>En muchos deportes, existe un "punto óptimo" de edad, donde se encuentran equilibradas las habilidades físicas, técnicas y estratégicas. Este punto ideal suele ubicarse entre mediados de los veinte y principios de los treinta años. Aunque existen casos notables de atletas olímpicos que compiten y, en ocasiones, ganan medallas después de los cincuenta años, la mayoría pertenece a disciplinas que demandan habilidades excepcionales y menos exigencia en términos de fuerza aeróbica o anaeróbica, tales como tiro, vela, equitación y esgrima.</p>
+    <p>La mayoria de los medallistas en las últimas competiciones se encuentran en edades que sobrepasan los 30 años, y a excepción de unos pocos como Leuris Pupo, el cual es un competidor  de Tiro deportivo, que a sus 43 años en las últimas olimpiadas alcanzo medalla, para la mayoria de atletas con más de 35 que compiten en deportes que requieran mayores capacidades físicas como el Judo o Boxeo, ya les resultaría un poco dificil obtener medallas.</p>
+   <div class="description">
+        Distribución de las edades de los medallistas en las últimas olimpiadas
+    </div>
+    <canvas id="edadChart"></canvas>
+    </div>
+    <p>   Varias razones impiden la participación de los medallistas en los Juegos Olímpicos este año. Entre ellos, se encuentran varios atletas cubanos, como Yarelis Barrios y Asley González, quienes actualmente residen fuera de Cuba. Asley González, tras obtener la nacionalidad de otro país, planea representarlo en las próximas Olimpiadas. Del mismo modo, Yarisley Silva, una medallista destacada, ha suspendido su carrera deportiva tras convertirse en madre el año pasado. Estos ejemplos ilustran la situación de muchos otros atletas que, por diversas causas, no pueden participar en los Juegos Olímpicos, ya sea por estar fuera de su país o debido a circunstancias personales o profesionales. La ausencia de estos atletas, posiblemente, hubiera incrementado el número de medallas que Cuba podría haber obtenido.</p>
+    
+    <p>Si deseas  observar cual ha sido el recorrido de los medallistas de las últimas olimpiadas, seleccione el nombre:</p>
+    <select id="featureOptions">
+        <option value="Asley González"> Asley González </option>
+        <option value="Idalys Ortiz"> Idalys Ortiz </option>
+        <option value="Iván Cambar Rodriguez"> Iván Cambar Rodriguez</option>
+        <option value="Leonel Suárez"> Leonel Suárez </option>
+        <option value="Leuris Pupo"> Leuris Pupo </option>
+        <option value="Liván López Azcuy"> Liván López Azcuy</option>
+        <option value="Lazaro Alvarez Estrada"> Lázaro Álvarez Estrada </option>
+        <option value="Mijaín López Nuñes"> Mijaín López Nuñes </option>
+    <option value="Robeisy Ramirez Carrazana"> Robeisy Ramírez Carrazana </option>
+        <option value="Robelis Despaigne"> Robelis Despaigne </option>
+        <option value="Roniel Iglesias"> Roniel Iglesias </option>
+        <option value="Yanet Bermoy Acosta"> Yanet Bermoy Acosta </option>
+        <option value="Yarelis Barrios"> Yarelis Barrios </option>
+        <option value="Yarisley Silva"> Yarisley Silva </option>
+        <option value="Yasniel Toledo"> Yasniel Toledo </option>
+        <option value="Arlen López"> Arlen López </option>
+        <option value="Denia Caballero"> Denia Caballero </option>
+        <option value="Yaimé Pérez"> Yaimé Pérez </option>
+        <option value="Erislandy Savón"> Erislandy Savón </option>
+        <option value="Reineris Salas Perez"> Reineris Salas </option>
+        <option value="Ismael Borrero"> Ismael Borrero </option>
+        <option value="Joahnys Argilagos"> Joahnys Argilagos </option>
+        <option value="Julio La Cruz Peraza"> Julio La Cruz Peraza </option>
+        <option value="Yasmany Daniel Lugo Cabrera"> Yasmany Daniel Lugo Cabrera </option>
+        <option value="Andy Cruz"> Andy Cruz </option>
+        <option value="Juan Miguel Echevarria"> Juan Miguel Echevarria </option>
+        <option value="Luis Alberto Orta Sanchez"> Luis Alberto Orta Sanchez </option>
+        <option value="Maykel Masso"> Maykel Masso </option>
+        <option value="Rafael Alba Castillo"> Rafael Alba Castillo</option>
+    </select>  
+  
+    <div class="description">
+        <div id="edada"></div>
+        <canvas id="myChart"></canvas>
+    </div> 
+
+    <script src="jv2.js"></script>
+    <p>A pesar de los desafíos y cambios en la composición de su equipo olímpico, Cuba sigue siendo un actor relevante en el escenario olímpico, con atletas como Mijain López brillando en ciertos deportes. La transición hacia nuevos talentos y la adaptación a las dinámicas cambiantes del deporte internacional son testimonios de la resilencia y la determinación de Cuba para continuar contribuyendo al legado olímpico.</p>
+    <p>La historia olímpica de Cuba es y será un testimonio de la pasión, el talento y los valores que definen a este país. A través de sus logros y desafíos, Cuba ha demostrado que el deporte es mucho más que competencia; es una expresión de la humanidad y un medio para construir un futuro más justo y equitativo.</p>
+</body>
+</html>
