@@ -1,15 +1,15 @@
 document.addEventListener("DOMContentLoaded", function() {
-    fetch("./player.csv")
+    fetch("../csv/player.csv")
    .then(response => response.text())
    .then(data => {
         console.log("Respuesta completa:", data);
         console.log("Datos cargados:", data);
         const parsedData = Papa.parse(data, {header: true}).data;
-
+  
         if(parsedData.length > 0) {
             console.log("Buena carga");
             const years = ['2000', '2004', '2008', '2012', '2016', '2020'];
-
+  
             // Crear el elemento select y añadir opciones
             const selectElement = document.getElementById('featureOptions');
             const options = parsedData.map(row => row.Athlete);
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 optionElement.value = value;
                 optionElement.textContent = value;
             });
-
+  
             // Función para manejar el cambio en el select
             selectElement.addEventListener('change', function() {
                 const selectedOptionValue = this.value;
@@ -26,8 +26,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 // Filtrar los datos basados en el atleta seleccionado
                 const filteredData = parsedData.filter(row => row.Athlete === athleteName);
                 years.forEach((year) => {
-                    if (!filteredData.some(row => row.Anno === year && row.count!== undefined)) {
-                        filteredData.push({ Anno: year, count: 0 });
+                    if (!filteredData.some(row => row.Anno === year && row.Type!== undefined)) {
+                        filteredData.push({ Anno: year, Type: '0' });
                     }
                 });
                 const filteredEdad=edades.find(row => row.nombre === athleteName)
@@ -38,10 +38,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 //updateBarChart(filteredData); // Asumiendo que esta es la función para inicializar el gráfico
                 updateChartData('myChart', filteredData); // Ahora verifica si el gráfico existe antes de actualizar
             });
-            const initialAthleteData = parsedData.filter(row => row.Athlete === "Maykel Massó");
+            const initialAthleteData = parsedData.filter(row => row.Athlete === "Maykel Masso");
             years.forEach((year) => {
-                if (!initialAthleteData.some(row => row.Anno === year && row.count!== undefined)) {
-                    initialAthleteData.push({ Anno: year, count: 0 });
+                if (!initialAthleteData.some(row => row.Anno === year && row.Type!== undefined)) {
+                    initialAthleteData.push({ Anno: year, Type: "0" });
                 }
             });
             initialAthleteData.sort((a, b) => a.Anno - b.Anno);
@@ -51,9 +51,9 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     })
    .catch(error => console.error('Error al cargar o parsear el CSV:', error));
-});
-
-const edades = [
+  });
+  
+  const edades = [
     { nombre: "Asley González", edad: 34,participara:""},
     { nombre: "Idalys Ortiz", edad: 34 },
     { nombre: "Iván Cambar Rodriguez", edad: 40 },
@@ -82,88 +82,143 @@ const edades = [
     { nombre: "Juan Miguel Echevarria", edad: 25 },
     { nombre: "Luis Alberto Orta Sanchez", edad: 29 },
     { nombre: "Maykel Masso", edad: 25},
-    { nombre: "Rafael Alba Castillo", edad: 30 }
+    { nombre: "Rafael Alba Castillo", edad: 30 },
+    { nombre: "Serguey Torres", edad: 37 },
+    { nombre: "Fernando Dayan Jorge Enriquez", edad: 26 }
+    
    ];
-const gruposPorEdad = edades.reduce((acc, persona) => {
-    acc[persona.edad] = (acc[persona.edad] || 0) + 1;
-    return acc;
-}, {});
-
-// Extraer solo las edades unicas
-const edadesUnicas = Object.keys(gruposPorEdad);
-const ctx = document.getElementById('edadChart').getContext('2d');
-   const chart = new Chart(ctx, {
-       type: 'bar',
-       data: {
-           labels: edadesUnicas,
-           datasets: [{
-               label: 'Edades',
-               data: gruposPorEdad,
-               backgroundColor: 'rgba(75, 192, 192, 0.2)',
-               borderColor: 'rgba(75, 192, 192, 1)',
-               borderWidth: 1
-           }]
-       },   
-       options: {
-        tooltips: {
-            callbacks: {
-                label: function(tooltipItem, data) {
-                    const edad = data.labels[tooltipItem.index];
-                    console.log("Edad:", edad); // Verifica la edad obtenida
-                    const atletas = edades.filter(persona => persona.edad === parseInt(edad)).map(persona => persona.nombre);
-                    console.log("Atletas:", atletas); // Verifica los nombres de los atletas obtenidos
-                    return `Edad: ${edad}, Atletas: ${atletas.join(', ')}`;
+   const datosArray = [
+    { Anno: 18, Count: 1 },
+    { Anno: 19, Count: 1 },
+    { Anno: 20, Count: 0 },
+    { Anno: 21, Count: 2 },
+    { Anno: 22, Count: 4 },
+    { Anno: 23, Count: 4 },
+    { Anno: 24, Count: 3 },
+    { Anno: 25, Count: 5 },
+    { Anno: 26, Count: 5 },
+    { Anno: 27, Count: 1 },
+    { Anno: 28, Count: 1 },
+    { Anno: 29, Count: 2 },
+    { Anno: 30, Count: 3 },
+    { Anno: 31, Count: 2 },
+    { Anno: 32, Count: 0 },
+    { Anno: 33, Count: 3 },  
+    { Anno: 34, Count: 0 },
+    { Anno: 35, Count: 1 },
+    { Anno: 36, Count: 0 },
+    { Anno: 37, Count: 1 },
+    { Anno: 38, Count: 0 },
+    { Anno: 39, Count: 0 },
+    { Anno: 40, Count: 0 },
+    { Anno: 31, Count: 0 },
+    { Anno: 42, Count: 0 },
+    { Anno: 43, Count: 1 }
+  ];
+  
+  // Corrección aquí: Mapear los elementos de datosArray para extraer los valores de Anno como etiquetas
+  const labels = datosArray.map(data => data.Anno);
+  
+  const ctx = document.getElementById('edadChart').getContext('2d');
+  
+  const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels, // Usar las etiquetas corregidas aquí
+      datasets: [{
+        label: 'Edades',
+        data: datosArray.map(data => data.Count), // Asegúrate de mapear correctamente los datos para contar
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+        y: {
+            beginAtZero: true,
+            ticks: {
+                callback: function(value, index, values) {
+                    return Math.round(value);
                 }
-            }}        
+            }
+        },
     }
-});
-// Función para actualizar los datos del gráfico
-function updateChartData(chartId, newData) {
+  });
+  // Función para actualizar los datos del gráfico
+  function updateChartData(chartId, newData) {
     const chart = Chart.getChart(chartId);
     if (chart) {
         chart.data.labels = newData.map(item => item.Anno);
         chart.data.datasets[0].label = newData[0].Athlete;
-        chart.data.datasets[0].data = newData.map(item => item.count);
+        chart.data.datasets[0].data = newData.map(item => {
+          if (item.Type === "0") {
+            return 0;
+          } else if (item.Type === "Bronze") {
+            return 1;
+          } else if (item.Type === "Silver") {
+            return 2;
+          } else if (item.Type === "Gold") {
+            return 3;
+          }
+        });
         chart.update();
     } else {
         // Si el gráfico no existe, crea uno nuevo
         const ctx = document.getElementById(chartId).getContext('2d');
         new Chart(ctx, {
-            type: 'line', // Asegúrate de que el tipo de gráfico coincida con tus expectativas
+            type: 'line', // Asegúrate de que el Type de gráfico coincida con tus expectativas
             data: {
                 labels: newData.map(item => item.Anno),
                 datasets: [{
                     label: newData[0].Athlete,
-                    data: newData.map(item => item.count),
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderWidth: 1
+                    data: newData.map(item => {
+                      if (item.Type === "0") {
+                        return 0;
+                      } else if (item.Type === "Bronze") {
+                        return 1;
+                      } else if (item.Type === "Silver") {
+                        return 2;
+                      } else if (item.Type === "Gold") {
+                        return 3;
+                      }
+                    }),
                 }]
-        },
-        options: {
-            scales: {
-                y: {
-                    ticks: {
-                        stepSize: 1,
-                        max: 4,
-                        min: 0
-                    }
-                },
-                x: {
-                    ticks: {
-                        beginAtZero: false,
-                        stepSize: 4,
-                        max: 1996,
-                        min: 2020
+            },
+            options: {
+                scales: {
+                    y: {
+                      ticks: {
+                        callback: function(value, index, values) {
+                          if (value === 0) {
+                            return '0';
+                          } else if (value === 1) {
+                            return 'Bronze';
+                          } else if (value === 2) {
+                            return 'Silver';
+                          } else if (value === 3) {
+                            return 'Gold';
+                          }
+                        }
+                      },
+                      min: 0,
+                      max: 3,
+                      stepSize: 1
+                    },
+  
+                    x: {
+                        ticks: {
+                            beginAtZero: false,
+                            stepSize: 4,
+                            max: 1996,
+                            min: 2020
+                        }
                     }
                 }
             }
-        }
-    });
-}
-}
-
-const data = [
+        });
+    }
+  }
+  const data = [
     { year: 1900, medal: 'Gold', count: 1 },
     { year: 1900, medal: 'Silver', count: 1 },
     { year: 1904, medal: 'Gold', count: 4 },
@@ -217,15 +272,15 @@ const data = [
   {year :2020 ,medal : "Gold" ,count :7},
   {year :2020 ,medal : "Silver" ,count :3}
   ];
-console.log(data)
-crearGraficoBarras(data);
-console.log("Se ejecuto");
-function crearGraficoBarras(data) {
+  console.log(data)
+  crearGraficoBarras(data);
+  console.log("Se ejecuto");
+  function crearGraficoBarras(data) {
     const labels = [];
     const valoresOro = [];
     const valoresPlata = [];
     const valoresBronce = [];
-
+  
     // Filtrar las medallas de oro, plata y bronce
     data.forEach(item => {
         if (!labels.includes(item.year)) {
@@ -244,7 +299,7 @@ function crearGraficoBarras(data) {
         if (valoresPlata[index] === undefined) valoresPlata[index] = 0;
         if (valoresBronce[index] === undefined) valoresBronce[index] = 0;
     });
-
+  
     // Crear el gráfico de barras agrupadas solo para los años con medallas
     var ctx = document.getElementById('chart').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -279,4 +334,4 @@ function crearGraficoBarras(data) {
             }
         }
     });
-}
+  }
