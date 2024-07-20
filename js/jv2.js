@@ -134,7 +134,7 @@ const datosArrayData = datosArray.map(item => item.Count);
 // Dataset para el gráfico de barras
 const barDataset = {
   type: 'bar',
-  label: 'Cantidad por Edad',
+  label: 'Edades en las que obtuvieron medallas',
   data: edadesData,
   backgroundColor: 'rgba(75, 192, 192, 0.2)',
   borderColor: 'rgba(75, 192, 192, 1)',
@@ -144,7 +144,7 @@ const barDataset = {
 // Dataset para el gráfico de líneas
 const lineDataset = {
   type: 'line',
-  label: 'Count',
+  label: 'Edades actuales',
   data: datosArrayData,
   borderColor: 'rgba(255, 99, 132, 1)',
   fill: false
